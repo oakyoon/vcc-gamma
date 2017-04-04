@@ -6,8 +6,8 @@ function [datadir, basedir, hostname] = GammaDataDir()
 		hostname = 'default';
 	else
 		hostname = strtrim(hostname);
-		if ~isempty(regexp(hostname, '\.local$', 'once'))
-			fprintf(2, 'hostname ends with ''.local'', \n');
+		if ~isempty(regexp(hostname, '\.local$', 'once'))  % workaround for mac
+			fprintf(2, 'removing ''.local'' at the end of hostname.\n');
 			hostname = regexprep(hostname, '\.local$', '');
 		end
 	end
