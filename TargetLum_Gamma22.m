@@ -1,3 +1,3 @@
 function target_lum = TargetLum_Gamma22()
-	target_lum = repmat(linspace(0, 1, 256)' .^ 2.2, 1, 3);
+	target_lum = TargetLum_Linear() .^ 2.2;
 end
