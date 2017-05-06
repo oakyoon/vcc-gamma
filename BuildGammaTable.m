@@ -1,9 +1,12 @@
-function [gamma_table, lum_table] = BuildGammaTable(mtable, target_lum)
+function [gamma_table, lum_table] = BuildGammaTable(mtable, target_lum, rel_lum)
 	if ~exist('mtable', 'var') || isempty(mtable)
 		mtable = LoadMeasurementTable;
 	end
 	if ~exist('target_lum', 'var') || isempty(target_lum)
 		target_lum = TargetLum_Linear;
+	end
+	if ~exist('rel_lum', 'var') || isempty(rel_lum)
+		rel_lum = RelLum_sRGB;
 	end
 
 	% check input args.
@@ -13,7 +16,7 @@ function [gamma_table, lum_table] = BuildGammaTable(mtable, target_lum)
 	end
 
 	% build gamma table
-	lum_table   = BuildLumTable(mtable, target_lum);
+	lum_table   = BuildLumTable(mtable, target_lum, rel_lum);
 	gamma_table = cell(size(mtable));
 	for t = 1:numel(mtable)
 		gamma_table{t} = zeros(size(lum_table, 1), 3);

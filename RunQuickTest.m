@@ -31,7 +31,8 @@ try
 		);
 	p1_data.mtable = MeasurementSeq_RGB(p1_data.levels, device, ...
 		p1_data.screen_id, LinearGammaTable, p1_data.n_measures);
-	p1_data.gamma_table = BuildGammaTable(p1_data.mtable);
+	p1_data.gamma_table = BuildGammaTable(p1_data.mtable, ...
+		[], RelLum_Measured(p1_data.mtable));
 
 	% phase 2 calibration
 	p2_data = struct( ...

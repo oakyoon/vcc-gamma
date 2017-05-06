@@ -1,9 +1,12 @@
-function lum_table = BuildLumTable(mtable, target_lum)
+function lum_table = BuildLumTable(mtable, target_lum, rel_lum)
 	if ~exist('mtable', 'var') || isempty(mtable)
 		mtable = LoadMeasurementTable;
 	end
 	if ~exist('target_lum', 'var') || isempty(target_lum)
 		target_lum = TargetLum_Linear;
+	end
+	if ~exist('rel_lum', 'var') || isempty(rel_lum)
+		rel_lum = RelLum_sRGB;
 	end
 
 	% check input args.
@@ -17,7 +20,7 @@ function lum_table = BuildLumTable(mtable, target_lum)
 	% determine lum. range
 	minlum    = max(cell2mat(cellfun(@(t) {t(1,   5:7)}, mtable(:))), [], 1);
 	maxlum    = min(cell2mat(cellfun(@(t) {t(end, 5:7)}, mtable(:))), [], 1);
-	lum_range = min((maxlum - minlum) ./ LumRatio_RGB) .* LumRatio_RGB;
+	lum_range = min((maxlum - minlum) ./ rel_lum) .* rel_lum;
 
 	% build lum. table
 	n_lums    = size(target_lum, 1);
