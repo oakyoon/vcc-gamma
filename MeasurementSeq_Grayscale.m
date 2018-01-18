@@ -24,4 +24,11 @@ function mtable = MeasurementSeq_Grayscale(levels, device, screen_id, gamma_tabl
 	colors = repmat(levels, 1, 3);
 	lums = MeasurementSeq_Raw(colors, device, screen_id, gamma_table, n_measures);
 	mtable(:, 5) = mean(lums, 2);
+
+	% var-dump
+	if CheckVarDump
+		dumpfile = sprintf('MeasurementSeq_Grayscale.%s.mat', ...
+			datestr(now(), 'yyyy-mm-dd.HH_MM_SS'));
+		save(fullfile(fileparts(mfilename('fullpath')), 'var-dump', dumpfile));
+	end
 end

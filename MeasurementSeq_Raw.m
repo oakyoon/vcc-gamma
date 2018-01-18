@@ -48,6 +48,13 @@ function [lums, colors, gamma_table] = MeasurementSeq_Raw(colors, device, screen
 			end
 		end
 
+		% var-dump
+		if CheckVarDump
+			dumpfile = sprintf('MeasurementSeq_Raw.%s.mat', ...
+				datestr(now(), 'yyyy-mm-dd.HH_MM_SS'));
+			save(fullfile(fileparts(mfilename('fullpath')), 'var-dump', dumpfile));
+		end
+
 		Screen('CloseAll');
 	catch e
 		Screen('CloseAll');

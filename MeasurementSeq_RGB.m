@@ -44,4 +44,11 @@ function mtable = MeasurementSeq_RGB(levels, device, screen_id, gamma_table, n_m
 			end
 		end
 	end
+	
+	% var-dump
+	if CheckVarDump
+		dumpfile = sprintf('MeasurementSeq_RGB.%s.mat', ...
+			datestr(now(), 'yyyy-mm-dd.HH_MM_SS'));
+		save(fullfile(fileparts(mfilename('fullpath')), 'var-dump', dumpfile));
+	end
 end

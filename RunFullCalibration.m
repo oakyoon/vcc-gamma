@@ -29,11 +29,11 @@ for countdown_sec = countdown:-1:1
 end
 fprintf(2, 'starting... \n');
 
+% turn off sync tests
+Screen('Preference', 'SkipSyncTests', 1);
+
 try
 	clear e;
-	% turn off sync tests
-	Screen('Preference', 'SkipSyncTests', 1);
-
 	% phase 1 calibration
 	if ~exist('p1_data', 'var') || ~isstruct(p1_data)
 		p1_data = struct( ...
@@ -80,11 +80,6 @@ try
 			p3_data.screen_id, p2_data.gamma_table, p3_data.n_measures);
 	end
 
-	% restore sync tests
-	Screen('Preference', 'SkipSyncTests', 0);
-	% reset gamma table
-	ResetGammaTable;
-
 	% save data files
 	datadir = fullfile(GammaDataDir, num2str(screen_id));
 	if ~exist(datadir, 'dir')
@@ -106,7 +101,18 @@ try
 	subplot(3, 2, [5 6]);  Plot_MeasurementTable(p3_data.mtable, true); title('Linearity Check');
 	saveas(hf, fullfile(datadir, figfile));
 catch e
+	% var-dump
+	if CheckVarDump
+		dumpfile = sprintf('Workspace.%s.mat', ...
+			datestr(now(), 'yyyy-mm-dd.HH_MM_SS'));
+		save(fullfile(fileparts(mfilename('fullpath')), 'var-dump', dumpfile));
+	end
 end
+
+% restore sync tests
+Screen('Preference', 'SkipSyncTests', 0);
+% reset gamma table
+ResetGammaTable;
 
 % close device
 try
