@@ -28,7 +28,7 @@ classdef LumMeter_Dummy < LumMeter
 
 		function l = read(obj)
 			if obj.bufferTimeout >= GetSecs && ~isempty(obj.bufferValue)
-				l = sum((obj.bufferValue .^ obj.gamma) .* LumRatio_RGB * 100);
+				l = sum((obj.bufferValue .^ obj.gamma) .* RelLum_sRGB * 100);
 			else
 				l = rand * 100;
 			end
